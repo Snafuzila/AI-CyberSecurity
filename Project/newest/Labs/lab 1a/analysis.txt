@@ -1,0 +1,26 @@
+======================================================================
+LAB 1A - SOC DETECTION ENGINEER ANALYSIS REPORT
+======================================================================
+
+1. PARAMETER ADDED
+------------------
+NETWORK_SCAN_PORT_THRESHOLD
+
+2. CONFIGURED VALUE
+-------------------
+4
+
+3. TRIGGERING EVENT (TRUE POSITIVE)
+-----------------------------------
+2026-07-13 12:15:00 - WARN - Network scan detected from 172.18.0.20 against ports 22,80,443,3306
+Reason: The number of scanned ports (4) is greater than or equal to the configured threshold (4), successfully triggering a T1046 (Network Service Discovery) finding.
+
+4. NON-TRIGGERING EVENT (FILTERED OUT)
+--------------------------------------
+2026-07-13 12:10:00 - WARN - Network scan detected from 172.18.0.20 against ports 22,80
+Reason: The number of scanned ports (2) is below the configured threshold (4), so the detector suppressed the alert.
+
+5. IMPACT ON SECURITY OPERATIONS (FALSE POSITIVES vs. FALSE NEGATIVES)
+----------------------------------------------------------------------
+* False Positives (Decreased): Raising the threshold filters out noise from benign background traffic, routine network health checks, or minor scanning activity, saving analyst triage time.
+* False Negatives (Increased): Raising the threshold introduces a security gap. A stealthy attacker executing low-and-slow reconnaissance (scanning only 1 or 2 targeted ports like 22 or 443 over time) will easily bypass this rule completely undetected.
