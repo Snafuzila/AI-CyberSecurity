@@ -1,0 +1,44 @@
+ Migration List
+I already built and verified this as a real zip rather than just a list — C:\Users\Tot\Desktop\lab2a-morpheus-lite-migration-v2.zip (11.7 MB, 75 files). Contents:
+
+
+lab2a-morpheus-lite/
+├── README_handover.md              ← the doc below
+├── data/
+│   ├── KDDTrain+.txt                (NSL-KDD, required)
+│   ├── KDDTest+.txt                 (NSL-KDD, required)
+│   ├── credit_card_fraud_10k.csv    (present, not yet wired in — see doc)
+│   └── fingerprint_profiles.json
+├── research/xai_rai_comparison/
+│   ├── config.py, data_pipeline.py, models.py, evaluation.py, rai_analysis.py, xai_analysis.py, run_comparison.py
+│   ├── train_and_persist.py, enriched_payload.py, llm_orchestrator.py, run_scenarios.py   ← Phases 1-4
+│   ├── README.md
+│   ├── artifacts/nsl_kdd/
+│   │   ├── isolation_forest.pkl, autoencoder.pt, scaler.pkl, encoder.pkl, manifest.json   ← trained artifacts
+│   ├── is_and_ae_on_nsl_kdd.py                          ← NOT ours; your separate Colab script (flagged below)
+│   └── nsl_kdd_test_predictions_from_saved_models.csv   ← NOT ours; origin unclear (flagged below)
+├── pyproject.toml, requirements.txt   ← environment reconstruction
+├── config/, docker-compose.yml, morpheus_lite/, agent_orchestrator.py, morpheus_lite_detector.py, ...   ← full live-pipeline scaffold, included for completeness (not imported by the research suite)
+Excluded on purpose (I filtered these out before zipping — don't chase them separately):
+
+.venv/ (1.5 GB) — rebuild via pip install -e ".[xai-research]" on the new machine, not copyable.
+__pycache__/, .pytest_cache/ — regenerated automatically.
+nsl-kdd/ (54 MB) — a redundant duplicate of the same two files already in data/.
+research.zip — a stale zip from an earlier session (only has the pre-Phase-1-4 files, no artifacts). Don't use it; delete it once the new zip is verified.
+Environment reconstruction on the new machine:
+
+
+cd lab2a-morpheus-lite
+python -m venv .venv && .venv\Scripts\activate     # Windows
+pip install -r requirements.txt
+pip install -e ".[xai-research]"    # torch, shap, scipy — NOT in requirements.txt, only in pyproject.toml
+One thing worth knowing: I checked, and the research suite has zero imports from morpheus_lite — it's fully self-contained. If you only care about continuing the XAI/RAI work (not the live Kafka pipeline), research/xai_rai_comparison/ + data/ + pyproject.toml/requirements.txt alone would be enough. I still zipped the whole project since you said "entire project."
+
+2. Handover Summary
+Written to labs/lab2a-morpheus-lite/README_handover.md (already inside the zip). I corrected a few things against your draft after verifying against the actual code and a live run:
+
+AE file format: it's autoencoder.pt (raw PyTorch state_dict), not .keras — this pipeline never used Keras.
+Phase numbering: your "Phase 3 (XAI & RAI)" merged two separate files — SHAP/reconstruction-error extraction is Phase 2 (enriched_payload.py), and RAI policy logic is Phase 3 (llm_orchestrator.py). Fixed to match actual filenames.
+RAI scope: I verified rai_metadata only carries Precision/Recall/F1/FPR/Fairness Gap — Robustness and Transparency scores exist in rai_analysis.py but aren't actually used by the Phase 1–4 payload pipeline. Flagged as available-but-not-wired-in rather than claimed as done.
+ICMP finding: verified by re-running the actual fairness report — it's correct and even stronger than stated (ICMP FPR 54.9% vs TCP 7.3%, a 47.6-point gap). Added the full per-group table.
+Flagged two files that aren't part of what we built: is_and_ae_on_nsl_kdd.py (a Colab export using Keras, not our PyTorch AE) and nsl_kdd_test_predictions_from_saved_models.csv — both real, both worth keeping, but I didn't want them silently absorbed into "our" Phase 1–4 narrative since they use a different framework and I don't know their exact origin.
