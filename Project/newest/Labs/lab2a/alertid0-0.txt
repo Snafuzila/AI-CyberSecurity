@@ -1,0 +1,45 @@
+Alert ID	alert-0-0
+Correlation ID: f63edf64-1bac-4426-84af-5781ed024fd0
+Scenario	file_access
+Risk Score	80
+User	alice
+Host	host-03
+Event Type	file_access
+
+Q1 How complete is the available evidence?
+ Excellent
+Q2 How confident are you that the evidence supports the reported alert?
+ Very High
+Q3 Which evidence influenced your judgement the most?
+ user-specific fingerprint deviation z=122.3397
+Meta-AI Review
+{
+"agent":"Meta-AI Supervisory Agent"
+"approved":true
+"disposition":"approve"
+"issues":[]
+"questions_or_requests":[]
+"uncertainty":0.2
+"reflection":"Decision is sufficiently supported for governed continuation."
+}
+Q4 Agree
+Q5 Agree
+Q6 No
+Q7 Very High
+Q8 No
+Q9 Increased
+Q10 Yes
+Q11 Strongly Agree
+Q12 Agree
+Q13 Agree
+Q14 No
+Q15 Strongly Agree
+Q16 Agree
+Q17 Agree
+Q18 Moderately Useful
+7.1 Accept AI Recommendation
+7.2 High
+7.3 The other fingerprint has high anomaly, the current action it took is normal, destructive actions should be blocked
+7.4 XAI
+7.5 The Responsible AI assessment significantly influenced my decision.
+
