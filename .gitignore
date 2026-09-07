@@ -32,28 +32,31 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Runtime and generated data
+# Runtime and generated data (paths below are relative to this repo root; project
+# source lives under Project/, so most data/generated paths are prefixed accordingly)
 exports/
 *.parquet
-data/audit.jsonl
-data/*.tmp
-data/datasets/
+Project/data/audit.jsonl
+Project/data/*.tmp
+Project/data/datasets/
 logs/
 *.log
 
 # Streamlit
-.streamlit/secrets.toml
+Project/.streamlit/secrets.toml
 
 # Datasets - not redistributed for licensing reasons; download instructions are in
-# research/xai_rai_comparison/README.md (NSL-KDD) and README_handover.md (credit card).
-# Trained artifacts derived from them (research/xai_rai_comparison/artifacts/) ARE kept
-# tracked below so results reproduce without needing the raw data or a retrain.
-data/*.txt
-data/*.csv
+# Project/research/xai_rai_comparison/README.md (NSL-KDD) and Project/README_handover.md
+# (credit card). Trained artifacts derived from them
+# (Project/research/xai_rai_comparison/artifacts/) ARE kept tracked below so results
+# reproduce without needing the raw data or a retrain.
+Project/data/*.txt
+Project/data/*.csv
 
-# Unused / unclear-origin export sitting in the research folder (see README_handover.md:
-# "not part of the Phase 1-4 build" -- a Colab-script export, different AE framework).
-research/xai_rai_comparison/nsl_kdd_test_predictions_from_saved_models.csv
+# Unused / unclear-origin export sitting in the research folder (see
+# Project/README_handover.md: "not part of the Phase 1-4 build" -- a Colab-script
+# export, different AE framework).
+Project/research/xai_rai_comparison/nsl_kdd_test_predictions_from_saved_models.csv
 
 # Personal backup/migration archive, not source.
 lab2a-morpheus-lite-migration-v2.zip
